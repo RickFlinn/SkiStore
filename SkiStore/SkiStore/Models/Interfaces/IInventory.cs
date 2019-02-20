@@ -15,6 +15,9 @@ namespace SkiStore.Interfaces
 
         IEnumerable<Product> GetAllProducts();
 
+        //update
+        Task UpdateProduct(Product product);
+
         
     }
 }
