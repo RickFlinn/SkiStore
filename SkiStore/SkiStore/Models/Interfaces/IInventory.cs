@@ -18,6 +18,7 @@ namespace SkiStore.Interfaces
         //update
         Task UpdateProduct(Product product);
 
-        
+        //delete
+        Task DeleteProduct(int id);
     }
 }
