@@ -10,6 +10,11 @@ namespace SkiStore.Interfaces
         //create
         Task CreateProduct(Product product);
 
+        //read
+        Task<Product> GetProduct(int id);
+
+        IEnumerable<Product> GetAllProducts();
+
         
     }
 }
