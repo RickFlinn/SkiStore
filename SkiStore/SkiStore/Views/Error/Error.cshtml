@@ -1,0 +1,12 @@
+﻿@model SkiStore.Models.ViewModels.ErrorViewModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="errorDisplay">
+    @if(Model.ErrorSummary != null)
+     {
+        <h1>@Model.ErrorSummary</h1>
+     }
+    <p>@Model.ErrorMessage</p>
+</div>

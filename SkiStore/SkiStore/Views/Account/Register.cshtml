@@ -1,0 +1,52 @@
+﻿@model SkiStore.Models.ViewModels.RegisterViewModel
+
+@{ 
+    Layout = "_Layout";
+}
+
+
+<form asp-action="Post">
+    <div asp-validation-summary="All"></div>
+
+    <label asp-for="UserName">
+        <input asp-for="UserName" />
+    </label>
+    <span asp-validation-for="UserName"></span>
+
+    <label asp-for="Email">
+        <input asp-for="Email" />
+    </label>
+    <span asp-validation-for="Email"></span>
+
+    <label asp-for="FirstName">
+        <input asp-for="FirstName" />
+    </label>
+    <span asp-validation-for="FirstName"></span>
+
+    <label asp-for="LastName">
+        <input asp-for="LastName" />
+    </label>
+    <span asp-validation-for="LastName"></span>
+
+    <label asp-for="DateOfBirth">
+        <input asp-for="DateOfBirth" />
+    </label>
+    <span asp-validation-for="DateOfBirth"></span>
+
+    <label asp-for="Password">
+        <input asp-for="Password" />
+    </label>
+    <span asp-validation-for="Password"></span>
+
+    <label asp-for="ConfirmPassword">
+        <input asp-for="ConfirmPassword" />
+    </label>
+    <span asp-validation-for="ConfirmPassword"></span>
+
+    <label asp-for="AgreedToWaiver">
+        <input asp-for="AgreedToWaiver" />
+    </label>
+    <span asp-validation-for="AgreedToWaiver"></span>
+
+    <button type="submit">Submit</button>
+</form>
