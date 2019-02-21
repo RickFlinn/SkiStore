@@ -37,6 +37,9 @@ namespace SkiStore
             services.AddDbContext<SkiStoreUserDbContext>(options =>
                      options.UseSqlServer(Configuration["ConnectionStrings:DefaultUserDbConnection"]));
 
+            services.AddDbContext<ProductDbContext>(options =>
+                     options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+
             //services.AddDbContext<SkiStoreDbContext>(options =>
             //  options. SOME STUFF );
         }
