@@ -11,4 +11,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Interfaces\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Models\Services\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
