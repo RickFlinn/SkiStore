@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SkiStore.Migrations.ProductDb
+namespace SkiStore.Migrations.SkiStoreProductDb
 {
     public partial class initial : Migration
     {

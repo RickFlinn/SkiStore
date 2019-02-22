@@ -10,7 +10,7 @@ using SkiStore.Data;
 namespace SkiStore.Migrations
 {
     [DbContext(typeof(SkiStoreUserDbContext))]
-    [Migration("20190222190039_initial")]
+    [Migration("20190222190636_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,9 +69,9 @@ namespace SkiStore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "aa062382-24fe-4883-b567-f55dd8af26c0",
+                            Id = "41aa1622-396a-4b5f-92aa-f2fe45f99326",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4501f42d-9152-4b86-8730-414b433e093d",
+                            ConcurrencyStamp = "02576680-ce57-4b54-8748-8870d410557f",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1),
                             EmailConfirmed = false,
                             FirstName = "Skier",
