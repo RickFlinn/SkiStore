@@ -16,11 +16,14 @@ namespace SkiStore
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; private set; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder().AddEnvironmentVariables();
+            builder.AddUserSecrets<Startup>();
+
+            Configuration = builder.Build();
         }
 
 
@@ -37,8 +40,9 @@ namespace SkiStore
             services.AddDbContext<SkiStoreUserDbContext>(options =>
                      options.UseSqlServer(Configuration["ConnectionStrings:DefaultUserDbConnection"]));
 
-            //services.AddDbContext<SkiStoreDbContext>(options =>
-            //  options. SOME STUFF );
+            services.AddDbContext<SkiStoreProductDbContext>(options =>
+                     options.UseSqlServer(Configuration["ConnectionStrings:DefaultDbConnection"]));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +52,6 @@ namespace SkiStore
             {
                 app.UseDeveloperExceptionPage();
             }
-
 
             app.UseStaticFiles();
             app.UseAuthentication();

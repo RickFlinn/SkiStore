@@ -10,14 +10,14 @@ using SkiStore.Data;
 namespace SkiStore.Migrations
 {
     [DbContext(typeof(SkiStoreUserDbContext))]
-    [Migration("20190221072222_initial")]
+    [Migration("20190222190636_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -69,9 +69,9 @@ namespace SkiStore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "db6a2d0b-0b9e-4b99-affb-962909ac32ef",
+                            Id = "41aa1622-396a-4b5f-92aa-f2fe45f99326",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6bbd313a-eb32-43f6-8474-4a3c1441c92a",
+                            ConcurrencyStamp = "02576680-ce57-4b54-8748-8870d410557f",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1),
                             EmailConfirmed = false,
                             FirstName = "Skier",
