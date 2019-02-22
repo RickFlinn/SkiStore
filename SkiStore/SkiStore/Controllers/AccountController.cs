@@ -66,8 +66,38 @@ namespace SkiStore.Controllers
                 return RedirectToAction("Index", "Home");
                 //RedirectToAction("Index", "Error", new ErrorViewModel(e.Message));
             }
-
         }
 
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl) => View(new LoginViewModel { ReturnUrl = returnUrl });
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel lvm)
+        {
+            if(ModelState.IsValid)
+            {
+                Microsoft.AspNetCore.Identity.SignInResult 
+                    result = await _signInManager.PasswordSignInAsync(lvm.UserName, lvm.Password, false, false);
+
+                if(result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(lvm.ReturnUrl) && Url.IsLocalUrl(lvm.ReturnUrl))
+                        return Redirect(lvm.ReturnUrl);
+
+                    else
+                        return RedirectToAction("Index", "Home");
+
+                } else
+                {
+                    lvm.AlertMessage = "The given username or password was incorrect.";
+                    return View(lvm);
+                }
+            } else
+            {
+                lvm.AlertMessage = "You must enter both a username and a password, NIMWIT.";
+                return View(lvm);
+            }
+        }
     }
 }
