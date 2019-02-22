@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Data
 {
-    public class ProductDbContext : DbContext
+    public class SkiStoreProductDbContext : DbContext
     {
-        public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
+        public SkiStoreProductDbContext(DbContextOptions<SkiStoreProductDbContext> options) : base(options)
         {
 
         }
