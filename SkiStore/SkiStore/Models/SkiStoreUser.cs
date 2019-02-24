@@ -15,6 +15,8 @@ namespace SkiStore.Models
         public string LastName { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        
+        [Required]
+        public bool AgreedToWaiver { get; set; }
+
     }
 }

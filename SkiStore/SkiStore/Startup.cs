@@ -37,6 +37,13 @@ namespace SkiStore
             services.AddDbContext<SkiStoreUserDbContext>(options =>
                      options.UseSqlServer(Configuration["ConnectionStrings:DefaultUserDbConnection"]));
 
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("WaivedAdult", policy =>
+                                                  policy.Requirements.Add(new WaivedAdultRequirement());
+            });
+
             //services.AddDbContext<SkiStoreDbContext>(options =>
             //  options. SOME STUFF );
         }
@@ -53,7 +60,7 @@ namespace SkiStore
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
-
+            app.UseHttpsRedirection();
           
         }
     }

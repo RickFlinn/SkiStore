@@ -47,6 +47,7 @@ namespace SkiStore.Controllers
                     newUser.Email =       regVModel.Email;
                     newUser.PhoneNumber = regVModel.PhoneNumber;
                     newUser.UserName =    regVModel.UserName;
+                    newUser.AgreedToWaiver =      regVModel.AgreedToWaiver;
 
                 IdentityResult userCreate = await _userManager.CreateAsync(newUser, regVModel.Password);
 
@@ -82,8 +83,8 @@ namespace SkiStore.Controllers
 
                 if(result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(lvm.ReturnUrl) && Url.IsLocalUrl(lvm.ReturnUrl))
-                        return Redirect(lvm.ReturnUrl);
+                    if (!string.IsNullOrEmpty(lvm.ReturnUrl))
+                        return LocalRedirect(lvm.ReturnUrl);
 
                     else
                         return RedirectToAction("Index", "Home");
@@ -99,5 +100,17 @@ namespace SkiStore.Controllers
                 return View(lvm);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> LogOut(string returnUrl)
+        {
+            await _signInManager.SignOutAsync();
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return LocalRedirect(returnUrl);
+            else
+                return RedirectToAction("Index", "Home");
+        }
+        
     }
 }
