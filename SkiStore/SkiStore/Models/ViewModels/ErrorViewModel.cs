@@ -11,3 +11,6 @@ namespace SkiStore.Models.ViewModels
         public string ErrorMessage { get; set; }
     }
 }
+
+
+
