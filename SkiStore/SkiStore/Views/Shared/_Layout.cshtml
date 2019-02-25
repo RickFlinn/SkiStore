@@ -1,10 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿<!DOCTYPE html>
 
+<html>
+<head>
+    <link rel="stylesheet" href="~/Styles/Style.css" />
+    <meta name="viewport" content="width=device-width" />
+</head>
 
+<body>
+    <header>
+        <h1>Ski Store</h1>
 
-}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/Account/Register">Register</a></li>
+            <li><a href="/Account/Login">Login</a></li>
+        </ul>
+    </header>
+    
 
-RenderBody()
+    <div>@RenderBody()</div>
+
+    <footer>
+        &copy; 2019 Team White
+    </footer>
+</body>
+</html>
+
