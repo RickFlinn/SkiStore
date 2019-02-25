@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkiStore.Data;
 using SkiStore.Models;
+using SkiStore.Models.Handlers;
 
 namespace SkiStore
 {
@@ -43,7 +44,7 @@ namespace SkiStore
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("WaivedAdult", policy =>
-                                                  policy.Requirements.Add(new WaivedAdultRequirement());
+                                                  policy.Requirements.Add(new WaivedAdultRequirement()));
             });
 
             services.AddDbContext<SkiStoreProductDbContext>(options =>
