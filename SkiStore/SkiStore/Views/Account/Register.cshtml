@@ -8,47 +8,45 @@
 <form asp-action="Post">
     <div asp-validation-summary="All"></div>
 
-    <label asp-for="UserName">
+    <label asp-for="UserName">UserName
         <input asp-for="UserName" />
     </label>
     <span asp-validation-for="UserName"></span>
 
-    <label asp-for="Email">
+    <label asp-for="Email">Email
         <input asp-for="Email" />
     </label>
     <span asp-validation-for="Email"></span>
 
-    <label asp-for="FirstName">
+    <label asp-for="FirstName">First Name
         <input asp-for="FirstName" />
     </label>
     <span asp-validation-for="FirstName"></span>
 
-    <label asp-for="LastName">
+    <label asp-for="LastName">Last Name
         <input asp-for="LastName" />
     </label>
     <span asp-validation-for="LastName"></span>
 
-    <label asp-for="DateOfBirth">
+    <label asp-for="DateOfBirth">Date of birth
         <input asp-for="DateOfBirth" />
     </label>
     <span asp-validation-for="DateOfBirth"></span>
 
-    <label asp-for="Password">
+    <label asp-for="Password">Password
         <input asp-for="Password" />
     </label>
     <span asp-validation-for="Password"></span>
 
-    <label asp-for="ConfirmPassword">
+    <label asp-for="ConfirmPassword">Confirm Password
         <input asp-for="ConfirmPassword" />
     </label>
     <span asp-validation-for="ConfirmPassword"></span>
 
-    <label asp-for="AgreedToWaiver">
+    <label asp-for="AgreedToWaiver">I totally won't sue you guys
         <input asp-for="AgreedToWaiver" />
     </label>
     <span asp-validation-for="AgreedToWaiver"></span>
-
-
 
     <button type="submit">Submit</button>
 </form>

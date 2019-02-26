@@ -1,4 +1,12 @@
-﻿h1 {
+﻿* {
+    box-sizing: border-box;
+}
+
+body, header, main, footer {
+    width: 100%;
+}
+
+h1 {
     font-size: 35px;
 }
 
@@ -22,13 +30,49 @@ li {
     float: left;
 }
 
-    li a {
-        display: block;
-        color: #666;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
+li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
 
+/*---------------Product Card Grid----------------*/
+.deck {
+    align-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    padding: 3em;
+}
+
+.card {
+    background-color: darkgrey;
+    display: flex;
+    flex-direction: column;
+    width: 10em;
+    height: 15em;
+    margin: 2em;
+    text-align: center;
+    border-radius: 3px;
+}
+
+
+.card * {
+    width: 10em;
+    margin: .1em auto;
+    display: block;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.card img {
+    width: 10em;
+    height: 8em;
+    background-color: aliceblue;
+    border-radius: 0px;
+}
 

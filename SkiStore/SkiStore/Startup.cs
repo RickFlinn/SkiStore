@@ -10,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkiStore.Data;
+using SkiStore.Interfaces;
 using SkiStore.Models;
 using SkiStore.Models.Handlers;
+using SkiStore.Models.Services;
 
 namespace SkiStore
 {
@@ -50,6 +52,8 @@ namespace SkiStore
             services.AddDbContext<SkiStoreProductDbContext>(options =>
                      options.UseSqlServer(Configuration["ConnectionStrings:DefaultDbConnection"]));
 
+            services.AddScoped<IInventory, Producterator>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

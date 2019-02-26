@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Interfaces
 {
-    interface IInventory
+    public interface IInventory
     {
         //create
         Task CreateProduct(Product product);
@@ -15,7 +15,11 @@ namespace SkiStore.Interfaces
         //read
         Task<Product> GetProduct(int id);
 
+        // Get all of em
         IEnumerable<Product> GetAllProducts();
+
+        // Create or update if the item exists
+        Task SaveAsync(Product product);
 
         //update
         Task UpdateProduct(Product product);

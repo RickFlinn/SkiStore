@@ -8,8 +8,6 @@ namespace SkiStore.Models.ViewModels
     public class CartViewModel
     {
         public IEnumerable<CartItem> CartItems { get; set; }
-        public string User { get; set; }
-
         
         public Product Item { get; set; }
         public int Quantity { get; set; }
