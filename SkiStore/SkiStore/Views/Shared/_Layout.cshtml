@@ -18,16 +18,17 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                
+
                 @if (signInManager.IsSignedIn(User))
                 {
-                    <li>Welcome @User.Claims.First(c => c.Type == "FirstName").Value</li>
+                <li>Welcome @User.Claims.First(c => c.Type == "FirstName").Value</li>
                 }
                 else
                 {
-                    <li><a href="/Account/Register">Register</a></li>
-                    <li><a href="/Account/Login">Login</a></li>
+                <li><a href="/Account/Register">Register</a></li>
+                <li><a href="/Account/Login">Login</a></li>
                 }
+                <li><a href="/Products/Index">Products</a></li>
             </ul>
         </nav>
     </header>

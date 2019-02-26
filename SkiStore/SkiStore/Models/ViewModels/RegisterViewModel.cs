@@ -38,7 +38,7 @@ namespace SkiStore.Models.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
         
-        [Required]
+        
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Primary Phone Number")]
         public string PhoneNumber { get; set; }

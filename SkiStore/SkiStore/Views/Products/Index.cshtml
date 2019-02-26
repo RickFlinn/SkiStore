@@ -1,0 +1,17 @@
+﻿@model SkiStore.Models.ViewModels.ProductsViewModel
+@using SkiStore.Models
+@{ 
+    Layout = "_Layout";
+}
+
+<div class="deck">
+@foreach(Product product in Model.Products)
+{
+    <div class="card">
+        <h3>@product.Name</h3>
+        <img src="@product.ImageURL" />
+        <p>@product.Description</p>
+        <p>$@product.Price</p>
+    </div>
+}
+</div>

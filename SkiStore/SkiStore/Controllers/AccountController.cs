@@ -57,9 +57,14 @@ namespace SkiStore.Controllers
                     return RedirectToAction("Index", "Home");
                 } else
                 {
-                    regVModel.ErrorMessage = "We're sorry, something went wrong when we tried to register your information. Please try again.";
+                    string errs = "";
+                    foreach(var error in userCreate.Errors)
+                    {
+                        errs += $"{error.Description}. ";
+                    }
+                    regVModel.ErrorMessage = errs;
                     return View(regVModel);
-                    // return RedirectToAction("Index", "Error", new ErrorViewModel(errorMessage));
+                    
                 }
             }
             catch (Exception e)
