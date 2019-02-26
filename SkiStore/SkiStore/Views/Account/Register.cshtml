@@ -4,6 +4,10 @@
     Layout = "_Layout";
 }
 
+@if(Model != null && Model.ErrorMessage != null)
+{
+    <p>@Model.ErrorMessage</p>
+}
 
 <form method="Post">
     <div asp-validation-summary="All"></div>
@@ -27,6 +31,11 @@
         <input asp-for="LastName" />
     </label>
     <span asp-validation-for="LastName"></span>
+
+    <label asp-for="PhoneNumber">Phone Number
+        <input asp-for="PhoneNumber" />
+    </label>
+    <span asp-validation-for="PhoneNumber"></span>
 
     <label asp-for="DateOfBirth">Date of birth
         <input asp-for="DateOfBirth" />
