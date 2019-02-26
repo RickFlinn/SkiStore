@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using SkiStore.Models
+@inject SignInManager<SkiStoreUser> signInManager
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -11,15 +15,25 @@
     <header>
         <h1>Ski Store</h1>
 
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/Account/Register">Register</a></li>
-            <li><a href="/Account/Login">Login</a></li>
-        </ul>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <li>Welcome @User.Claims.First(c => c.Type == "FirstName").Value</li>
+                }
+                else
+                {
+                    <li><a href="/Account/Register">Register</a></li>
+                    <li><a href="/Account/Login">Login</a></li>
+                }
+            </ul>
+        </nav>
     </header>
-    
 
-    <div>@RenderBody()</div>
+
+    <main>@RenderBody()</main>
 
     <footer>
         &copy; 2019 Team White
