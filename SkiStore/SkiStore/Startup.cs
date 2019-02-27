@@ -41,7 +41,7 @@ namespace SkiStore
                     .AddDefaultTokenProviders();
 
             services.AddDbContext<SkiStoreUserDbContext>(options =>
-                     options.UseSqlServer(Configuration["ConnectionStrings:DefaultUserDbConnection"]));
+                     options.UseSqlServer(Configuration["ConnectionStrings:DeployedUserDbConnection"]));
 
             services.AddAuthorization(options =>
             {
@@ -50,7 +50,7 @@ namespace SkiStore
             });
 
             services.AddDbContext<SkiStoreProductDbContext>(options =>
-                     options.UseSqlServer(Configuration["ConnectionStrings:DefaultDbConnection"]));
+                     options.UseSqlServer(Configuration["ConnectionStrings:DeployedDbConnection"]));
 
             services.AddScoped<IInventory, Producterator>();
             

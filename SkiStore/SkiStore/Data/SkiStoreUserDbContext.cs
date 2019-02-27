@@ -22,9 +22,11 @@ namespace SkiStore.Data
                 {
                     FirstName = "Skier",
                     LastName = "Skimanovski",
-                    DateOfBirth = new DateTime(1)
+                    DateOfBirth = new DateTime(1),
+                    AgreedToWaiver = true
                 });
         }
+
         public DbSet<SkiStoreUser> SkiStoreUsers { get; set; }
 
     }

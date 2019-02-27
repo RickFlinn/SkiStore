@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiStore.Data;
 
 namespace SkiStore.Migrations
 {
     [DbContext(typeof(SkiStoreUserDbContext))]
-    partial class SkiStoreUserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190227215302_oi")]
+    partial class oi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
