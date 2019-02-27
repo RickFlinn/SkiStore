@@ -1,20 +1,11 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# [SkiStore](https://skistore.azurewebsites.net/) (name to be changed)
+This is an ECommerce application that simulates an online storefront for a wintersports retail and rental location.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+This application makes use of .NET Core Identity to store and handle user identity and gate access to certain pages
+and functionality.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+For each user, we capture claims for the user's name, phone number, email address, desired password, the user's date of birth, and whether or not the user agrees to our terms and conditions.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+To access the Cart or any checkout functions, we enforce a policy that a user must be at least 18 years of age and have agreed to the waiver to rent or purchase equipment. It would be financially and legally irresponsible to allow underage users to purchase equipment for dangerous wintersport, and we want to do everything in our power to avoid liability for injuries sustained to our customers within the normal bounds of wintersport activity.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
