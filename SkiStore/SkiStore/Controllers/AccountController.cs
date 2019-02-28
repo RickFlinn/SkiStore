@@ -57,18 +57,19 @@ namespace SkiStore.Controllers
                 if (userCreate.Succeeded)
                 {
                     Claim claimToTheName = new Claim("FullName", $"{newUser.LastName}, {newUser.FirstName}");
-                    Claim dobClaim = new Claim(ClaimTypes.DateOfBirth,
+                    Claim dobClaim = new Claim("DateOfBirth",
                                                new DateTime(newUser.DateOfBirth.Year,
                                                             newUser.DateOfBirth.Month,
                                                             newUser.DateOfBirth.Day
                                                             ).ToString("u"),
                                                ClaimValueTypes.DateTime);
+                    
                     Claim waiverClaim = new Claim("AgreedToWaiver", newUser.AgreedToWaiver);
 
                     await _userManager.AddClaimsAsync(newUser, new Claim[] { claimToTheName, dobClaim, waiverClaim });
 
 
-                    await _signInManager.SignInAsync(newUser, false);
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
                     
                     return RedirectToAction("Index", "Home");
                 } else

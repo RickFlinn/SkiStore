@@ -21,7 +21,7 @@
 
                 @if (signInManager.IsSignedIn(User))
                 {
-                <li>Welcome @User.Claims.First(c => c.Type == "FirstName").Value</li>
+                <li>Welcome @User.Claims.First(c => c.Type == "FullName").Value</li>
                 <li><a href="/Account/Logout">Log Out</a></li>
                 }
                 else
