@@ -54,6 +54,7 @@ namespace SkiStore
 
             services.AddScoped<IInventory, Producterator>();
             
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,8 +65,8 @@ namespace SkiStore
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
             app.UseHttpsRedirection();
           

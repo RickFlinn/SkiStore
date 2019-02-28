@@ -11,7 +11,7 @@ namespace SkiStore.Models.Handlers
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, WaivedAdultRequirement requirement)
         {
-            if (!context.User.HasClaim(claim => claim.Type == ClaimTypes.DateOfBirth)
+            if (!context.User.HasClaim(claim => claim.Type == "DateOfBirth")
              || !context.User.HasClaim(claim => claim.Type == "AgreedToWaiver"))
                 return Task.CompletedTask;
 

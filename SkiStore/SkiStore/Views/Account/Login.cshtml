@@ -3,7 +3,13 @@
     Layout = "_Layout";
 }
 
-<form method="post">
+
+@if(Model!= null && !string.IsNullOrEmpty(Model.AlertMessage))
+{
+    <p>@Model.AlertMessage</p>
+}
+
+<form asp-controller="Account" asp-action="Login" method="post">
     <label asp-for="UserName">Username
         <input asp-for="UserName" />
     </label>

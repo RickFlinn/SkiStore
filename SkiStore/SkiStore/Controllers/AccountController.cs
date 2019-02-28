@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SkiStore.Models;
 using SkiStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
@@ -47,13 +49,28 @@ namespace SkiStore.Controllers
                     newUser.Email =       regVModel.Email;
                     newUser.PhoneNumber = regVModel.PhoneNumber;
                     newUser.UserName =    regVModel.UserName;
-                    newUser.AgreedToWaiver =      regVModel.AgreedToWaiver;
+                    newUser.AgreedToWaiver = regVModel.AgreedToWaiver.ToString();
+                    newUser.DateOfBirth = regVModel.DateOfBirth;
 
                 IdentityResult userCreate = await _userManager.CreateAsync(newUser, regVModel.Password);
 
                 if (userCreate.Succeeded)
                 {
-                    await _signInManager.SignInAsync(newUser, false);
+                    Claim claimToTheName = new Claim("FullName", $"{newUser.LastName}, {newUser.FirstName}");
+                    Claim dobClaim = new Claim("DateOfBirth",
+                                               new DateTime(newUser.DateOfBirth.Year,
+                                                            newUser.DateOfBirth.Month,
+                                                            newUser.DateOfBirth.Day
+                                                            ).ToString("u"),
+                                               ClaimValueTypes.DateTime);
+                    
+                    Claim waiverClaim = new Claim("AgreedToWaiver", newUser.AgreedToWaiver);
+
+                    await _userManager.AddClaimsAsync(newUser, new Claim[] { claimToTheName, dobClaim, waiverClaim });
+
+
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    
                     return RedirectToAction("Index", "Home");
                 } else
                 {
@@ -81,27 +98,35 @@ namespace SkiStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
-            if(ModelState.IsValid)
+            try
             {
-                Microsoft.AspNetCore.Identity.SignInResult 
-                    result = await _signInManager.PasswordSignInAsync(lvm.UserName, lvm.Password, false, false);
-
-                if(result.Succeeded)
+                if(ModelState.IsValid)
                 {
-                    if (!string.IsNullOrEmpty(lvm.ReturnUrl))
-                        return LocalRedirect(lvm.ReturnUrl);
+                    Microsoft.AspNetCore.Identity.SignInResult 
+                        result = await _signInManager.PasswordSignInAsync(lvm.UserName, lvm.Password, false, false);
 
-                    else
-                        return RedirectToAction("Index", "Home");
+                    if(result.Succeeded)
+                    {
+                        if (!string.IsNullOrEmpty(lvm.ReturnUrl))
+                            return LocalRedirect(lvm.ReturnUrl);
 
+                        else
+                            return RedirectToAction("Index", "Home");
+
+                    } else
+                    {
+                        lvm.AlertMessage = "The given username or password was incorrect.";
+                        return View(lvm);
+                    }
                 } else
                 {
-                    lvm.AlertMessage = "The given username or password was incorrect.";
+                    lvm.AlertMessage = "You must enter both a username and a password, NIMWIT.";
                     return View(lvm);
                 }
-            } else
+            }
+            catch (Exception e)
             {
-                lvm.AlertMessage = "You must enter both a username and a password, NIMWIT.";
+                lvm.AlertMessage = e.Message;
                 return View(lvm);
             }
         }
@@ -117,5 +142,11 @@ namespace SkiStore.Controllers
                 return RedirectToAction("Index", "Home");
         }
         
+        [Authorize]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index, Home");
+        }
     }
 }

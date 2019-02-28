@@ -4,12 +4,12 @@
     Layout = "_Layout";
 }
 
-@if(Model != null && Model.ErrorMessage != null)
+@if (Model != null && Model.ErrorMessage != null)
 {
     <p>@Model.ErrorMessage</p>
 }
 
-<form method="Post">
+<form asp-controller="Account" asp-action="Register" method="Post">
     <div asp-validation-summary="All"></div>
 
     <label asp-for="UserName">UserName
