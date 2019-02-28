@@ -23,9 +23,18 @@ namespace SkiStore.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        ///     Returns the register/signup view. 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Register() => View();
 
+        /// <summary>
+        ///     Takes in user registration information and creates a new User in the Identity user database, with name, date of birth, and waiver claims.
+        /// </summary>
+        /// <param name="regVModel"> View model containing user registration data </param>
+        /// <returns> Home Index view if successful, or redirects to Register view </returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel regVModel)
         {
@@ -86,15 +95,28 @@ namespace SkiStore.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Index", "Home");
+                regVModel.ErrorMessage = e.Message;
+                return View(regVModel);
                 //RedirectToAction("Index", "Error", new ErrorViewModel(e.Message));
             }
         }
 
 
+        /// <summary>
+        ///     Directs users to the Login page. Accepts a return URL to take the user back to once they've logged in. 
+        /// </summary>
+        /// <param name="returnUrl"> URL to return to after successful login attempt </param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login(string returnUrl) => View(new LoginViewModel { ReturnUrl = returnUrl });
 
+        /// <summary>
+        ///     Attempts to log in user with specified login info. If the attempt succeeds, returns the user to the view where they attempted to log
+        ///     in from, or the Home view if a return URL was not supplied. 
+        ///     If the user's login attempt fails, redirects to the login page with an appropriate alert message. 
+        /// </summary>
+        /// <param name="lvm"> ViewModel containing entered username and password </param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
@@ -131,8 +153,13 @@ namespace SkiStore.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> LogOut(string returnUrl)
+        /// <summary>
+        ///     Logs out the current user. Redirects to Home view, or return url if supplied 
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> LogOut(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
 
@@ -142,11 +169,5 @@ namespace SkiStore.Controllers
                 return RedirectToAction("Index", "Home");
         }
         
-        [Authorize]
-        public async Task<IActionResult> LogOut()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-    }
+       
 }
