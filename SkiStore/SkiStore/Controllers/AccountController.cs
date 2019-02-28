@@ -146,7 +146,7 @@ namespace SkiStore.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index, Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
