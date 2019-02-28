@@ -9,22 +9,45 @@ namespace SkiStore.Interfaces
 {
     public interface IInventory
     {
-        //create
+        /// <summary>
+        ///     Create the given product.
+        /// </summary>
+        /// <param name="product"> Product to create </param>
+        /// <returns></returns>
         Task CreateProduct(Product product);
 
-        //read
+        /// <summary>
+        ///     Retrive the product with the given ID.
+        /// </summary>
+        /// <param name="id">ID of product to retrieve </param>
+        /// <returns> Product with that ID </returns>
         Task<Product> GetProduct(int id);
 
-        // Get all of em
+        /// <summary>
+        ///     Retrieve all stored products.
+        /// </summary>
+        /// <returns> IEnumerable of all products </returns>
         IEnumerable<Product> GetAllProducts();
 
-        // Create or update if the item exists
+        /// <summary>
+        ///     Create or update the given product, if it exists. 
+        /// </summary>
+        /// <param name="product"> Product to create or update </param>
+        /// <returns></returns>
         Task SaveAsync(Product product);
 
-        //update
+        /// <summary>
+        ///     Updates the given Product entry, if it exists.
+        /// </summary>
+        /// <param name="product"> Product </param>
+        /// <returns></returns>
         Task UpdateProduct(Product product);
 
-        //delete
+        /// <summary>
+        ///     Delete the Product entry with the given ID, if it exists.
+        /// </summary>
+        /// <param name="id">ID of product to delete </param>
+        /// <returns></returns>
         Task DeleteProduct(int id);
     }
 }

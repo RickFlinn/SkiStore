@@ -8,10 +8,19 @@ namespace SkiStore.Models.Interfaces
     public interface ICartManager
     {
 
-        // Get all items in a user's cart.
+        /// <summary>
+        ///     Get all items in a user's cart.
+        /// </summary>
+        /// <param name="userID"> User's ID </param>
+        /// <returns> All items in the user's Cart </returns>
         Task<IEnumerable<CartItem>> GetCartItems(string userID);
 
-        // Gets a specific cart item.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="productID"></param>
+        /// <returns></returns>
         Task<CartItem> GetItem(string userID, int productID);
 
         // Add the given quantity of the given item to a user's cart.

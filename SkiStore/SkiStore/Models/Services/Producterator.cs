@@ -17,7 +17,11 @@ namespace SkiStore.Models.Services
             _context = context;
         }
 
-        // Adds the given Product into the database. 
+        /// <summary>
+        ///     Creates a database entry for the given product. 
+        /// </summary>
+        /// <param name="product"> Product to add to database </param>
+        /// <returns></returns>
         public async Task CreateProduct(Product product)
         {
             Product exists = await _context.Products.FindAsync(product.ID);
@@ -28,7 +32,12 @@ namespace SkiStore.Models.Services
             }
         }
 
-        // Deletes a product from the DB, if it exists
+
+        /// <summary>
+        ///     Deletes a product from the DB, if it 
+        /// </summary>
+        /// <param name="id">ID of product to delete</param>
+        /// <returns></returns>
         public async Task DeleteProduct(int id)
         {
             Product doomed = await _context.Products.FindAsync(id);
@@ -39,20 +48,33 @@ namespace SkiStore.Models.Services
             }
         }
 
-        // Returns all products
+        
+        /// <summary>
+        ///     Get all products stored in the database
+        /// </summary>
+        /// <returns> List of all products in the database </returns>
         public IEnumerable<Product> GetAllProducts()
         {
             List<Product> allProducts = _context.Products.ToList();
             return allProducts;
         }
 
-        // Gets a specific product by its ID
+
+        /// <summary>
+        ///     Gets a specific product by its ID 
+        /// </summary>
+        /// <param name="id"> Product ID </param>
+        /// <returns> Product with corresponding ID </returns>
         public async Task<Product> GetProduct(int id)
         {
             return await _context.Products.FindAsync(id);
         }
 
-        // Updates a product if it exists in the DB
+        /// <summary>
+        ///     Updates a product if it exists in the DB
+        /// </summary>
+        /// <param name="product"> Product to update </param>
+        /// <returns></returns>        
         public async Task UpdateProduct(Product product)
         {
             Product exists = await _context.Products.FindAsync(product.ID);
@@ -62,8 +84,12 @@ namespace SkiStore.Models.Services
                 await _context.SaveChangesAsync();
             }
         }
-
-        // Adds the given product to the database if it doesn't exist, or updates the product entry if it does.
+        
+        /// <summary>
+        ///     Adds the given product to the database if it doesn't exist, or updates the product entry if it does.
+        /// </summary>
+        /// <param name="product"> Product to create or update </param>
+        /// <returns></returns>
         public async Task SaveAsync(Product product)
         {
             Product exists = await _context.Products.FindAsync(product.ID);

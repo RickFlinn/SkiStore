@@ -26,5 +26,7 @@ namespace SkiStore.Controllers
             return View(pvm);
         }
 
+        
+
     }
 }
