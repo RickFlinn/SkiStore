@@ -20,10 +20,12 @@ namespace SkiStore.Data
             builder.Entity<SkiStoreUser>().HasData(
                 new SkiStoreUser
                 {
+                    UserName = "SkiGuy",
                     FirstName = "Skier",
                     LastName = "Skimanovski",
+
                     DateOfBirth = new DateTime(1),
-                    AgreedToWaiver = true
+                    AgreedToWaiver = true.ToString()
                 });
         }
 

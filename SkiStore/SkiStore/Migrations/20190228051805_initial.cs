@@ -28,7 +28,8 @@ namespace SkiStore.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    AgreedToWaiver = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,8 +38,8 @@ namespace SkiStore.Migrations
 
             migrationBuilder.InsertData(
                 table: "SkiStoreUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "41aa1622-396a-4b5f-92aa-f2fe45f99326", 0, "02576680-ce57-4b54-8748-8870d410557f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1), null, false, "Skier", "Skimanovski", false, null, null, null, null, null, false, null, false, null });
+                columns: new[] { "Id", "AccessFailedCount", "AgreedToWaiver", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "635ef146-7eb1-404d-9140-61cb11a4c5ee", 0, "True", "8c4ec86d-ff94-4ff2-817d-bd8193b9c70f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1), null, false, "Skier", "Skimanovski", false, null, null, null, null, null, false, null, false, null });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

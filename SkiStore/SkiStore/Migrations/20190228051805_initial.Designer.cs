@@ -10,8 +10,8 @@ using SkiStore.Data;
 namespace SkiStore.Migrations
 {
     [DbContext(typeof(SkiStoreUserDbContext))]
-    [Migration("20190227215302_oi")]
-    partial class oi
+    [Migration("20190228051805_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,8 @@ namespace SkiStore.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<bool>("AgreedToWaiver");
+                    b.Property<string>("AgreedToWaiver")
+                        .IsRequired();
 
                     b.Property<string>("ConcurrencyStamp");
 
@@ -71,10 +72,10 @@ namespace SkiStore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "382173c1-668e-46e2-90a3-490a928c3ac9",
+                            Id = "635ef146-7eb1-404d-9140-61cb11a4c5ee",
                             AccessFailedCount = 0,
-                            AgreedToWaiver = true,
-                            ConcurrencyStamp = "dcb42ae4-7e74-429f-848e-89de0e0587e7",
+                            AgreedToWaiver = "True",
+                            ConcurrencyStamp = "8c4ec86d-ff94-4ff2-817d-bd8193b9c70f",
                             DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1),
                             EmailConfirmed = false,
                             FirstName = "Skier",

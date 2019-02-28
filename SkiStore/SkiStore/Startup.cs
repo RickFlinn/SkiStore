@@ -64,8 +64,8 @@ namespace SkiStore
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
             app.UseHttpsRedirection();
           
