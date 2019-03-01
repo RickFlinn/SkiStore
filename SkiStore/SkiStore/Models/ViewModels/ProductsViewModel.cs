@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Models.ViewModels
 {
-    public class ProductsViewModel
+    public class ProductsViewModel : PapaViewModel
     {
         public Product Product { get; set; }
 

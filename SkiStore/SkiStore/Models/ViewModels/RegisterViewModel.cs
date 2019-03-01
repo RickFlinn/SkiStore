@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Models.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : PapaViewModel
     {
         [Required]
         [Display(Name = "First Name")]
@@ -47,8 +47,6 @@ namespace SkiStore.Models.ViewModels
         [Display(Name = "I agree to all terms and conditions.")]
         public bool AgreedToWaiver { get; set; }
 
-
-        public string ErrorMessage { get; set; }
 
     }
 }
