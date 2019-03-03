@@ -7,9 +7,10 @@ namespace SkiStore.Models.ViewModels
 {
     public class CartViewModel : PapaViewModel
     {   
+        public Product Product { get; set; }
+
         public Cart Cart { get; set; }
         
-        public CartEntry ItemEntry { get; set; }
         public int Quantity { get; set; }
         
     }

@@ -9,9 +9,12 @@ namespace SkiStore.Models.ViewModels
     {
         public Product Product { get; set; }
 
+        public int Quantity { get; set; }
+
         public IEnumerable<Product> Products { get; set; }
 
-        public int ProductID { get; set; }
+        
+
 
         
 
