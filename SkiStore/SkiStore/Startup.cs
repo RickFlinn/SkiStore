@@ -13,6 +13,7 @@ using SkiStore.Data;
 using SkiStore.Interfaces;
 using SkiStore.Models;
 using SkiStore.Models.Handlers;
+using SkiStore.Models.Interfaces;
 using SkiStore.Models.Services;
 
 namespace SkiStore
@@ -53,6 +54,8 @@ namespace SkiStore
                      options.UseSqlServer(Configuration["ConnectionStrings:DefaultDbConnection"]));
 
             services.AddScoped<IInventory, Producterator>();
+            services.AddScoped<ICartManager, CartMan>();
+            services.AddScoped<ICartEntryManager, CartEntryManager>();
             
 
         }

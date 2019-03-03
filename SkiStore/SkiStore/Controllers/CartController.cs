@@ -16,58 +16,65 @@ namespace SkiStore.Controllers
     [Authorize(Policy = "WaivedAdult")]
     public class CartController : Controller
     {
-        public ICartManager _cartMan { get; }
-        public UserManager<SkiStoreUser> _userManager { get; }
+        private readonly ICartEntryManager _cartEntries;
+        private readonly ICartManager _cartMan;
+        private readonly UserManager<SkiStoreUser> _userManager;
 
-        public CartController(ICartManager cartMan, UserManager<SkiStoreUser> userManager)
+        public CartController(ICartEntryManager cartEntries, ICartManager cartMan, UserManager<SkiStoreUser> userManager)
         {
-            _cartMan = cartMan;
+            _cartEntries = cartEntries;
             _userManager = userManager;
+            _cartMan = cartMan;
         }
 
         
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
+            CartViewModel cvm = new CartViewModel();
 
-            if (user == null)
-                return RedirectToAction("Login", "Account", "~/Cart/Index");
+            try
+            {
+                SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-            string userID = user.Id;
-            CartViewModel cvm = new CartViewModel() { CartItems = await _cartMan.GetCartItems(userID) };
+                if (user == null)
+                    return RedirectToAction("Login", "Account", "~/Cart/Index");
 
+                string userID = user.Id;
+
+                cvm.Cart = await _cartMan.GetActiveCart(userID);
+
+            }
+            catch (Exception e)
+            {
+                cvm.ErrorMessage = e.Message;
+                cvm.Cart = new Cart();
+
+
+            }
             return View(cvm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(CartViewModel cvm)
+        public async Task<IActionResult> SaveToCart(CartViewModel cvm)
         {
-            SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
-            await _cartMan.Add(user.Id, cvm.Item.ID, cvm.Quantity);
+            try
+            {
+                await _cartEntries.SaveItem(cvm.ItemEntry);
 
-            return RedirectToAction("Index", "Cart");
+                return RedirectToAction("Index", "Cart");
+            }
+            catch (Exception e)
+            {
+                if(cvm == null)
+                    return RedirectToAction("Index", "Cart");
+
+                cvm.ErrorMessage = e.Message;
+
+                return RedirectToAction("Index", "Cart", cvm);
+            }
+            
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(CartViewModel cvm)
-        {
-            SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
-            await _cartMan.Update(user.Id, cvm.Item.ID, cvm.Quantity);
-
-            return RedirectToAction("Index", "Cart");
-        }
-        
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int productID)
-        {
-            SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
-            CartItem ci = await _cartMan.GetItem(user.Id, productID);
-
-            if(ci != null)
-                await _cartMan.Remove(user.Id, productID);
-
-            return RedirectToAction("Index", "Cart");
-        }
     }
 }

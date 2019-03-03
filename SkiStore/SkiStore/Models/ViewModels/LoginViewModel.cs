@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SkiStore.Models.ViewModels
 {
-    public class LoginViewModel
+    public class LoginViewModel : PapaViewModel
     {
         [Required]
         [Display(Name = "Username")]
@@ -17,7 +17,6 @@ namespace SkiStore.Models.ViewModels
 
         public string ReturnUrl { get; set; }
 
-        public string ErrorMessage { get; set; }
-        public string AlertMessage { get; set; }
+        
     }
 }

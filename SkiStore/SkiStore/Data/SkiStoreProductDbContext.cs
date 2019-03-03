@@ -16,8 +16,7 @@ namespace SkiStore.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Establish composite keys
-            builder.Entity<CartItem>().HasKey(ci => new { ci.UserID, ci.ProductID });
+            builder.Entity<CartEntry>().HasKey(ci => new { ci.CartID, ci.ProductID });
 
             //Seed database
             builder.Entity<Product>().HasData(
@@ -84,6 +83,7 @@ namespace SkiStore.Data
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<CartEntry> CartEntries { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

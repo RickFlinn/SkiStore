@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Models
 {
-    public class CartItem
+    public class CartEntry
     {
+        
+
+        // ---- Foreign Composite Keys ---- //
         [Required]
-        // Composite key
         public int ProductID { get; set; }
-        public string UserID { get; set; }
+        [Required]
+        public int CartID { get; set; }
+        
 
         // Number of the item in user's cart
+        [Required]
         public int Quantity { get; set; }
+
+        // ---- Navigation Properties ---- // 
 
         // associated Product
         public Product Product { get; set; }
+        public Cart Cart { get; set; }
     }
 }

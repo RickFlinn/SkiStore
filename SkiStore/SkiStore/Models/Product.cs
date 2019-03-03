@@ -22,5 +22,7 @@ namespace SkiStore.Models
         public string ImageURL { get; set; }
 
         public int Quantity { get; set; }
+
+        public List<CartEntry> CartEntries { get; set; }
     }
 }

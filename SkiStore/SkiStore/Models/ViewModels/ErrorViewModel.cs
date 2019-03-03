@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Models.ViewModels
 {
-    public class ErrorViewModel
+    public class ErrorViewModel : PapaViewModel
     {
-        public string ErrorSummary { get; set; }
-        public string ErrorMessage { get; set; }
+        
     }
 }
 
