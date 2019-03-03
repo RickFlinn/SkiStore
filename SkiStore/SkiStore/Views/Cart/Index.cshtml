@@ -1,0 +1,27 @@
+﻿@model SkiStore.Models.ViewModels.CartViewModel
+@using SkiStore.Models;
+@{ 
+    Layout = "_Layout";
+}
+
+<div class="cart">
+    
+   @if (Model.Cart != null) {
+       @foreach(CartEntry entry in Model.Cart.CartEntries)
+        {
+        <div class="cartItem">
+            <img src="@entry.Product.ImageURL" />
+            <h3>@entry.Product.Name</h3>
+            <p>@entry.Product.Price</p>
+            <form asp-controller="Cart" asp-action="SaveToCart" method="post">
+                <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
+                <label asp-for="Quantity">Quantity</label>
+                <input asp-for="Quantity" type="number" />
+                <button type="submit">Update Quantity</button>
+            </form>
+        </div>
+        }
+    } 
+    <button href=""></button>
+
+</div>
