@@ -4,10 +4,13 @@
 }
 
 <div class="errorDisplay">
-    @if(Model.ErrorSummary != null)
+    @if(Model.ErrorMessage != null)
      {
-        <h1>@Model.ErrorSummary</h1>
-     }
-    <p>@Model.ErrorMessage</p>
+        <p>@Model.ErrorMessage</p>
+
+    } else
+    {
+        <p>Woah, somethin went totally super wrong...</p>
+    }
 </div>
 
