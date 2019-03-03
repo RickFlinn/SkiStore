@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SkiStore.Data;
 using SkiStore.Models;
 using SkiStore.Models.Interfaces;
 using SkiStore.Models.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
@@ -28,6 +24,10 @@ namespace SkiStore.Controllers
         }
 
         
+        /// <summary>
+        ///     When accessed, sends the user a view displaying the user's current active cart.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -44,37 +44,57 @@ namespace SkiStore.Controllers
 
                 cvm.Cart = await _cartMan.GetActiveCart(userID);
 
+                return View(cvm);
             }
             catch (Exception e)
             {
-                cvm.ErrorMessage = e.Message;
-                cvm.Cart = new Cart();
-
-
+                ErrorViewModel errModel = new ErrorViewModel();
+                errModel.ErrorMessage = e.Message;
+                return RedirectToAction("Index", "Error", errModel);
             }
-            return View(cvm);
         }
 
+        /// <summary>
+        ///     Adds or updates an item to the user's cart. Takes in the product associated with the cart entry and the desired quantity.
+        ///     
+        ///     This endpoint is also used to "remove" items from the cart by setting its quantity to zero. 
+        ///     
+        ///     Redirects to the user's Cart overview when successful.
+        /// </summary>
+        /// <param name="cvm"> Cart ViewModel. Mostly used to access the ID </param>
+        /// <returns> Redirects to Index action of Cart controller </returns>
         [HttpPost]
-        public async Task<IActionResult> SaveToCart(CartViewModel cvm)
+        public async Task<IActionResult> SaveToCart(Product product, int quantity = 1)
         {
             try
             {
-                await _cartEntries.SaveItem(cvm.ItemEntry);
+                SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
+                if (user == null)
+                    return RedirectToAction("Login", "Account", "~/Cart/Index");
+
+                Cart activeCart = await _cartMan.GetActiveCart(user.UserName);
+
+                CartEntry newCartEntry = new CartEntry()
+                {
+                    ProductID = product.ID,
+                    CartID = activeCart.ID,
+                    Quantity = quantity
+                };
+
+                await _cartEntries.SaveItem(newCartEntry);
 
                 return RedirectToAction("Index", "Cart");
-            }
-            catch (Exception e)
+
+
+            } catch (Exception e)
             {
-                if(cvm == null)
-                    return RedirectToAction("Index", "Cart");
-
-                cvm.ErrorMessage = e.Message;
-
-                return RedirectToAction("Index", "Cart", cvm);
+                ErrorViewModel errModel = new ErrorViewModel();
+                errModel.ErrorMessage = e.Message;
+                return RedirectToAction("Index", "Error", errModel);
             }
-            
         }
+
+        
 
     }
 }
