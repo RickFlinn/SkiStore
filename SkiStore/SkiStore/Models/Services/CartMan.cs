@@ -50,7 +50,6 @@ namespace SkiStore.Models.Services
         {
             Cart activeCart = await _context.Carts.Where(c => c.User == userID && c.Active)
                                                    .Include(c => c.CartEntries)
-                                                     .ThenInclude(ce => ce.Product)
                                                    .FirstOrDefaultAsync();
             if(activeCart == null)
             {
