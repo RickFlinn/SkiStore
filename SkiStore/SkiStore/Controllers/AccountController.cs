@@ -40,26 +40,26 @@ namespace SkiStore.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     regVModel.ErrorMessage = "Ya done goofed. How hard is it to fill in all the forms, huh?";
                     return View(regVModel);
                 }
 
-                if(!regVModel.AgreedToWaiver)
+                if (!regVModel.AgreedToWaiver)
                 {
                     regVModel.ErrorMessage = "Please read and agree to all terms and conditions.";
                     return View(regVModel);
                 }
 
                 SkiStoreUser newUser = new SkiStoreUser();
-                    newUser.FirstName =   regVModel.FirstName;
-                    newUser.LastName =    regVModel.LastName;
-                    newUser.Email =       regVModel.Email;
-                    newUser.PhoneNumber = regVModel.PhoneNumber;
-                    newUser.UserName =    regVModel.UserName;
-                    newUser.AgreedToWaiver = regVModel.AgreedToWaiver.ToString();
-                    newUser.DateOfBirth = regVModel.DateOfBirth;
+                newUser.FirstName = regVModel.FirstName;
+                newUser.LastName = regVModel.LastName;
+                newUser.Email = regVModel.Email;
+                newUser.PhoneNumber = regVModel.PhoneNumber;
+                newUser.UserName = regVModel.UserName;
+                newUser.AgreedToWaiver = regVModel.AgreedToWaiver.ToString();
+                newUser.DateOfBirth = regVModel.DateOfBirth;
 
                 IdentityResult userCreate = await _userManager.CreateAsync(newUser, regVModel.Password);
 
@@ -72,25 +72,26 @@ namespace SkiStore.Controllers
                                                             newUser.DateOfBirth.Day
                                                             ).ToString("u"),
                                                ClaimValueTypes.DateTime);
-                    
+
                     Claim waiverClaim = new Claim("AgreedToWaiver", newUser.AgreedToWaiver);
 
                     await _userManager.AddClaimsAsync(newUser, new Claim[] { claimToTheName, dobClaim, waiverClaim });
 
 
                     await _signInManager.SignInAsync(newUser, isPersistent: false);
-                    
+
                     return RedirectToAction("Index", "Home");
-                } else
+                }
+                else
                 {
                     string errs = "";
-                    foreach(var error in userCreate.Errors)
+                    foreach (var error in userCreate.Errors)
                     {
                         errs += $"{error.Description}. ";
                     }
                     regVModel.ErrorMessage = errs;
                     return View(regVModel);
-                    
+
                 }
             }
             catch (Exception e)
@@ -122,12 +123,12 @@ namespace SkiStore.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    Microsoft.AspNetCore.Identity.SignInResult 
+                    Microsoft.AspNetCore.Identity.SignInResult
                         result = await _signInManager.PasswordSignInAsync(lvm.UserName, lvm.Password, false, false);
 
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         if (!string.IsNullOrEmpty(lvm.ReturnUrl))
                             return LocalRedirect(lvm.ReturnUrl);
@@ -135,12 +136,14 @@ namespace SkiStore.Controllers
                         else
                             return RedirectToAction("Index", "Home");
 
-                    } else
+                    }
+                    else
                     {
                         lvm.AlertMessage = "The given username or password was incorrect.";
                         return View(lvm);
                     }
-                } else
+                }
+                else
                 {
                     lvm.AlertMessage = "You must enter both a username and a password, NIMWIT.";
                     return View(lvm);
@@ -168,6 +171,6 @@ namespace SkiStore.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
-        
-       
+
+    }
 }
