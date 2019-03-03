@@ -1,0 +1,26 @@
+﻿@model  SkiStore.Models.ViewModels.ProductsViewModel
+@{ 
+    Layout = "_Layout";
+}
+
+
+
+<div class="productview">
+    <div>
+        <h2>@Model.Product.Name</h2>
+        <p>@Model.Product.Category</p>
+    </div>
+    
+    <p>@Model.Product.ID</p>
+    <img src="@Model.Product.ImageURL" />
+    <p>@Model.Product.Description</p>
+    <div>
+        <p>@Model.Product.Price</p>
+        <form asp-controller="Cart" asp-action="SaveToCart" method="post">
+            <input asp-for="Product.ID" type="hidden" value="@Model.Product.ID"/>
+            <input asp-for="Quantity" type="number" min="0" value="1" />
+            <button type="submit">Add To Cart</button>
+        </form>
+    </div>
+
+</div>
