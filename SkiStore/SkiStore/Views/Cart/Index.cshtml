@@ -2,26 +2,34 @@
 @using SkiStore.Models;
 @{ 
     Layout = "_Layout";
+    decimal subTotal = 0m;
 }
 
-<div class="cart">
+<section class="cart">
     
    @if (Model.Cart != null) {
+
        @foreach(CartEntry entry in Model.Cart.CartEntries)
         {
-        <div class="cartItem">
-            <img src="@entry.Product.ImageURL" />
-            <h3>@entry.Product.Name</h3>
-            <p>@entry.Product.Price</p>
-            <form asp-controller="Cart" asp-action="SaveToCart" method="post">
-                <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
-                <label asp-for="Quantity">Quantity</label>
-                <input asp-for="Quantity" type="number" max="10"/>
-                <button type="submit">Update Quantity</button>
-            </form>
-        </div>
+            subTotal += entry.Product.Price * entry.Quantity;
+           
+            <div class="cartItem">
+                <img src="@entry.Product.ImageURL" />
+                <h3>@entry.Product.Name</h3>
+                <p>@entry.Product.Price</p>
+                <form asp-controller="Cart" asp-action="SaveToCart" method="post">
+                    <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
+                    <label asp-for="Quantity">Quantity</label>
+                    <input asp-for="Quantity" type="number" value="@entry.Quantity" max="10"/>
+                    <button type="submit">Update Quantity</button>
+                </form>
+            </div>
         }
+        <div class="subTotal">
+            <h4>SubTotal: </h4>
+            <p>@subTotal</p>
+        </div>
     } 
-    <button href=""></button>
+    <button href="">CHECK EM</button>
 
-</div>
+</section>

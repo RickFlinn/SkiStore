@@ -65,6 +65,7 @@ namespace SkiStore.Models.Services
         {
             return await _context.CartEntries.Where(ce => ce.CartID == cartID 
                                                        && ce.ProductID == productID)
+                                             .Include(ce => ce.Product)
                                              .FirstOrDefaultAsync();
         }
 
