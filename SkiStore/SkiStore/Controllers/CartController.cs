@@ -40,9 +40,8 @@ namespace SkiStore.Controllers
                 if (user == null)
                     return RedirectToAction("Login", "Account", "~/Cart/Index");
 
-                string userID = user.Id;
 
-                cvm.Cart = await _cartMan.GetActiveCart(userID);
+                cvm.Cart = await _cartMan.GetActiveCart(user.UserName);
 
                 return View(cvm);
             }

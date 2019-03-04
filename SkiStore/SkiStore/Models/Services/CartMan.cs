@@ -48,7 +48,8 @@ namespace SkiStore.Models.Services
         /// <returns> Active cart associated with that user </returns>
         public async Task<Cart> GetActiveCart(string userID)
         {
-            Cart activeCart = await _context.Carts.Where(c => c.User == userID && c.Active)
+            Cart activeCart = await _context.Carts.Where(c => c.User == userID 
+                                                           && c.Active == true)
                                                    .Include(c => c.CartEntries)
                                                      .ThenInclude(ce => ce.Product)
                                                    .FirstOrDefaultAsync();
