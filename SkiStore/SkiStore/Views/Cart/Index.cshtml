@@ -16,7 +16,7 @@
             <form asp-controller="Cart" asp-action="SaveToCart" method="post">
                 <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
                 <label asp-for="Quantity">Quantity</label>
-                <input asp-for="Quantity" type="number" />
+                <input asp-for="Quantity" type="number" max="10"/>
                 <button type="submit">Update Quantity</button>
             </form>
         </div>

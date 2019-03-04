@@ -12,6 +12,9 @@
         <img src="@product.ImageURL" />
         <p>@product.Description</p>
         <p>$@product.Price</p>
+        <form asp-action="View" asp-controller="Products" method="get" asp-route-id="@product.ID">
+            <button type="submit">View Details</button>
+        </form>
     </div>
 }
 </div>

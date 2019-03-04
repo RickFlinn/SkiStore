@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
 {
-    [Authorize(Policy = "WaivedAdult")]
+    // [Authorize(Policy = "WaivedAdult")]
     public class CartController : Controller
     {
         private readonly ICartEntryManager _cartEntries;
@@ -74,14 +74,22 @@ namespace SkiStore.Controllers
 
                 Cart activeCart = await _cartMan.GetActiveCart(user.UserName);
 
-                CartEntry newCartEntry = new CartEntry()
-                {
-                    ProductID = product.ID,
-                    CartID = activeCart.ID,
-                    Quantity = quantity
-                };
+                CartEntry entry = await _cartEntries.GetItem(activeCart.ID, product.ID);
 
-                await _cartEntries.SaveItem(newCartEntry);
+
+                if(entry == null)
+                {
+                    entry = new CartEntry()
+                    {
+                        ProductID = product.ID,
+                        CartID = activeCart.ID,
+                        Quantity = 0
+                    };
+                }
+
+                entry.Quantity += quantity;
+
+                await _cartEntries.SaveItem(entry);
 
                 return RedirectToAction("Index", "Cart");
 

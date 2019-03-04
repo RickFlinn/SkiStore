@@ -119,41 +119,65 @@ namespace SkiStore.Controllers
         /// <param name="lvm"> ViewModel containing entered username and password </param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel lvm)
+        public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
         {
+            LoginViewModel lvm = new LoginViewModel()
+            {
+                UserName = userName,
+                Password = password,
+                ReturnUrl = returnUrl
+            };
+
             try
             {
+                
                 if (ModelState.IsValid)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult
-                        result = await _signInManager.PasswordSignInAsync(lvm.UserName, lvm.Password, false, false);
+                        result = await _signInManager.PasswordSignInAsync(userName, password, false, false);
 
                     if (result.Succeeded)
                     {
-                        if (!string.IsNullOrEmpty(lvm.ReturnUrl))
-                            return LocalRedirect(lvm.ReturnUrl);
+                        if (!string.IsNullOrEmpty(returnUrl))
+                            return LocalRedirect(returnUrl);
 
                         else
                             return RedirectToAction("Index", "Home");
 
-                    }
-                    else
+                    } else
                     {
-                        lvm.AlertMessage = "The given username or password was incorrect.";
-                        return View(lvm);
+                        
+                        if (result.IsNotAllowed)
+                        {
+                            lvm.AlertMessage = "User is not allowed to sign in.";
+                        }
+                        else if (result.IsLockedOut)
+                        {
+                            lvm.AlertMessage = "User locked out.";
+                        }
+                        else if (result.RequiresTwoFactor)
+                        {
+                            lvm.AlertMessage = "Two-factor verification required.";
+                        }
+                        else
+                        {
+                            lvm.AlertMessage = "The given username or password was incorrect.";
+                        }
                     }
                 }
                 else
                 {
                     lvm.AlertMessage = "You must enter both a username and a password, NIMWIT.";
-                    return View(lvm);
                 }
+                
             }
             catch (Exception e)
             {
                 lvm.AlertMessage = e.Message;
-                return View(lvm);
+                
             }
+
+            return View(lvm);
         }
 
         /// <summary>
