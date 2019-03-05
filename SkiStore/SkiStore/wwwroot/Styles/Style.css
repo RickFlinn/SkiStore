@@ -82,3 +82,37 @@ li a{
     border-radius: 0px;
 }
 
+/*------------------------ Cart --------------------------*/
+.cart {
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+    margin: 0 auto;
+    width: 60%;
+
+}
+
+.cart > * {
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+    display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+    height: 5em;
+    margin: auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.cartItem * {
+    flex-grow: 1;
+    margin: auto;
+}
+
+
