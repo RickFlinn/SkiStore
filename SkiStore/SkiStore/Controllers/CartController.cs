@@ -81,12 +81,11 @@ namespace SkiStore.Controllers
                     entry = new CartEntry()
                     {
                         ProductID = product.ID,
-                        CartID = activeCart.ID,
-                        Quantity = 0
+                        CartID = activeCart.ID
                     };
                 }
 
-                entry.Quantity += quantity;
+                entry.Quantity = quantity;
 
                 await _cartEntries.SaveItem(entry);
 
