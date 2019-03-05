@@ -20,7 +20,17 @@ namespace SkiStore.Models.Services
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            
+            SendGridClient client = new SendGridClient(_configuration["Sendgrid_Api_Key"]);
+
+            SendGridMessage msg = new SendGridMessage();
+
+            msg.SetFrom("noreply@SkiStore.com", "Ski Store Admin");
+
+            msg.AddTo(email);
+            msg.SetSubject("Welcome to our store!");
+            msg.AddContent(MimeType.Html, htmlMessage);
+
+            await client.SendEmailAsync(msg);
         }
     }
 }
