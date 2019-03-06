@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
 {
-    // [Authorize(Policy = "WaivedAdult")]
+    [Authorize(Policy = "WaivedAdult")]
     public class CartController : Controller
     {
         private readonly ICartEntryManager _cartEntries;

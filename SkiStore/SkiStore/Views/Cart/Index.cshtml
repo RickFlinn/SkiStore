@@ -2,26 +2,48 @@
 @using SkiStore.Models;
 @{ 
     Layout = "_Layout";
+    decimal subTotal = 0m;
 }
 
-<div class="cart">
+<section class="cart">
+    <div class="cartTitleBar">
+        <h2>Your Cart</h2>
+    </div>
     
-   @if (Model.Cart != null) {
-       @foreach(CartEntry entry in Model.Cart.CartEntries)
-        {
-        <div class="cartItem">
-            <img src="@entry.Product.ImageURL" />
-            <h3>@entry.Product.Name</h3>
-            <p>@entry.Product.Price</p>
-            <form asp-controller="Cart" asp-action="SaveToCart" method="post">
-                <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
-                <label asp-for="Quantity">Quantity</label>
-                <input asp-for="Quantity" type="number" max="10"/>
-                <button type="submit">Update Quantity</button>
-            </form>
-        </div>
-        }
-    } 
-    <button href=""></button>
+@if (Model.Cart != null && Model.Cart.CartEntries != null) {
 
-</div>
+    @foreach(CartEntry entry in Model.Cart.CartEntries)
+    {
+        if(entry.Quantity > 0)
+        {
+            subTotal += entry.Product.Price * entry.Quantity;
+
+            <div class="cartItem">
+                <img src="@entry.Product.ImageURL" />
+                <h3>@entry.Product.Name</h3>
+                <p>$@entry.Product.Price</p>
+                <form asp-controller="Cart" asp-action="SaveToCart" method="post">
+                    <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
+                    <label asp-for="Quantity">Quantity</label>
+                    <input asp-for="Quantity" type="number" value="@entry.Quantity" max="20"/>
+                    <button type="submit">Update</button>
+                </form>
+                <form asp-controller="Cart" asp-action="SaveToCart" method="post">
+                    <input asp-for="Product.ID" type="hidden" value="@entry.ProductID" />
+                    <input asp-for="Quantity" type="hidden" value="0" max="20" />
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+        }
+    }
+    <div class="checkout">
+        <h4>SubTotal: </h4>
+        <p>$@subTotal</p>
+        <button href="">CHECK EM</button>
+    </div>
+} else
+{
+    <p>Yer cart is empty!</p>
+}
+
+</section>
