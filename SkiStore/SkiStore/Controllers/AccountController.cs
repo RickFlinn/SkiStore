@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using SkiStore.Models;
 using SkiStore.Models.ViewModels;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
@@ -15,12 +17,14 @@ namespace SkiStore.Controllers
     {
         private UserManager<SkiStoreUser> _userManager { get; }
         private SignInManager<SkiStoreUser> _signInManager { get; set; }
+        private IEmailSender _emailSender;
 
 
-        public AccountController(UserManager<SkiStoreUser> userManager, SignInManager<SkiStoreUser> signInManager)
+        public AccountController(UserManager<SkiStoreUser> userManager, SignInManager<SkiStoreUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace SkiStore.Controllers
 
                 if (userCreate.Succeeded)
                 {
-                    Claim claimToTheName = new Claim("FullName", $"{newUser.LastName}, {newUser.FirstName}");
+                    Claim claimToTheName = new Claim("FullName", $"{newUser.FirstName} {newUser.LastName}");
                     Claim dobClaim = new Claim("DateOfBirth",
                                                new DateTime(newUser.DateOfBirth.Year,
                                                             newUser.DateOfBirth.Month,
@@ -77,6 +81,17 @@ namespace SkiStore.Controllers
 
                     await _userManager.AddClaimsAsync(newUser, new Claim[] { claimToTheName, dobClaim, waiverClaim });
 
+
+                    // Send the user an email
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append($"<p>Hello {newUser.FirstName} {newUser.LastName},<br>");
+                    sb.AppendLine("Thank you for joining SkiStore!</p>");
+
+                    // Get the user's email
+                    await _emailSender.SendEmailAsync(regVModel.Email, "Thank you for Registering!", sb.ToString());
+                    var ourUser = await _userManager.FindByEmailAsync(regVModel.Email);
+                    string id = ourUser.Id;
 
                     await _signInManager.SignInAsync(newUser, isPersistent: false);
 
