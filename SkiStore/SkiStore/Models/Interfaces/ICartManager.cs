@@ -16,12 +16,7 @@ namespace SkiStore.Models.Interfaces
         Task<IEnumerable<Cart>> GetUsersCarts(string userID);
 
         Task Deactivate(int cartID);
-
-        Task<Order> Checkout(int cartID);
-
-
         
-
-
+        
     }
 }
