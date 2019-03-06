@@ -39,7 +39,10 @@
     <div class="checkout">
         <h4>SubTotal: </h4>
         <p>$@subTotal</p>
-        <button href="">CHECK EM</button>
+        <form method="get" asp-action="Checkout" asp-controller="Orders">
+            <button type="submit">Check Out</button>
+        </form>
+
     </div>
 } else
 {
