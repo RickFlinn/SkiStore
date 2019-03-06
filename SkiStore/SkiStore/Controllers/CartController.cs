@@ -40,9 +40,8 @@ namespace SkiStore.Controllers
                 if (user == null)
                     return RedirectToAction("Login", "Account", "~/Cart/Index");
 
-                string userID = user.Id;
 
-                cvm.Cart = await _cartMan.GetActiveCart(userID);
+                cvm.Cart = await _cartMan.GetActiveCart(user.UserName);
 
                 return View(cvm);
             }
@@ -82,12 +81,11 @@ namespace SkiStore.Controllers
                     entry = new CartEntry()
                     {
                         ProductID = product.ID,
-                        CartID = activeCart.ID,
-                        Quantity = 0
+                        CartID = activeCart.ID
                     };
                 }
 
-                entry.Quantity += quantity;
+                entry.Quantity = quantity;
 
                 await _cartEntries.SaveItem(entry);
 
@@ -102,7 +100,12 @@ namespace SkiStore.Controllers
             }
         }
 
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(int cartID)
+        {
+
+        }
 
     }
 }
