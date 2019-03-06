@@ -18,12 +18,7 @@ namespace SkiStore.Models.Services
             _context = context;
         }
 
-        public async Task<Order> Checkout(int cartID)
-        {
-            // TODO: build order checkout logic when user goes to check out a cart. Copy all of the cart entries to the 
-            //  user's order, then return the order 
-            return new Order();
-        }
+        
 
         /// <summary>
         ///     Marks the cart with the given ID as "InActive". 
@@ -81,6 +76,7 @@ namespace SkiStore.Models.Services
         {
             return await _context.Carts.Where(c => c.ID == cartID)
                                         .Include(c => c.CartEntries)
+                                          .ThenInclude(ce => ce.Product)
                                         .FirstOrDefaultAsync();
         }
 
