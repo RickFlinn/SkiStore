@@ -11,9 +11,14 @@ namespace SkiStore.Models
 
         public string User { get; set; }
 
-        // @TODO: build out more functionality for payment processing / info
+        public decimal Total { get; set; }
 
-        public List<CartEntry> Items { get; set; }
-        public Cart From { get; set; }
+        public bool Paid { get; set; }
+
+        public bool Delivered { get; set; }
+
+        // Nav properties 
+        public Cart Cart { get; set; }
+        public int CartID { get; set; }
     }
 }

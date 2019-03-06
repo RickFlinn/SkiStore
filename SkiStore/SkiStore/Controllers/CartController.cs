@@ -100,7 +100,12 @@ namespace SkiStore.Controllers
             }
         }
 
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(int cartID)
+        {
+
+        }
 
     }
 }
