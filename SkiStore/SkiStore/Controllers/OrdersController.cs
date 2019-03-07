@@ -8,6 +8,7 @@ using SkiStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
@@ -79,11 +80,17 @@ namespace SkiStore.Controllers
                 };
                 return View("Orders/Checkout", cvm);
             }
+            StringBuilder message = new StringBuilder();
+            message.AppendLine($"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.");
+            //message.AppendLine("Product\t\tQuantity\t\tPrice");
+            //foreach(var entry in order.Cart.CartEntries)
+            //{
+            //    message.AppendLine($"{entry.Product}\t\t{entry.Quantity}\t\t");
+            //}
+            message.AppendLine($"Order Total: {order.Total}");
 
-            string message = $"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.";
-
-            await _emailSender.SendEmailAsync(user.Email, "Your Order", message);
-
+            await _emailSender.SendEmailAsync(user.Email, "Your Order", message.ToString());
+            
             Cart cart = await _cartMan.GetActiveCart(user.UserName);
             await _cartMan.Deactivate(cart.ID);
 
