@@ -82,12 +82,12 @@ namespace SkiStore.Controllers
             }
             StringBuilder message = new StringBuilder();
             message.AppendLine($"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.");
-            //message.AppendLine("Product\t\tQuantity\t\tPrice");
-            //foreach(var entry in order.Cart.CartEntries)
+            message.AppendLine("Product\t\tQuantity\t\tPrice");
+            //foreach (CartEntry entry in order.Cart.CartEntries)
             //{
-            //    message.AppendLine($"{entry.Product}\t\t{entry.Quantity}\t\t");
+            //    message.AppendLine($"{entry.Product.Name}\t\t{entry.Quantity}\t\t");
             //}
-            message.AppendLine($"Order Total: {order.Total}");
+            message.AppendLine($"Order Total: ${order.Total}");
 
             await _emailSender.SendEmailAsync(user.Email, "Your Order", message.ToString());
             
