@@ -19,6 +19,6 @@
 </div>
 <form method="post" asp-action="Confirm" asp-controller="Orders">
 @* In future, this will contain the forms for payment details. *@
-    <input asp-for="Order.ID" type="hidden" value="Order.ID" />
+    <input asp-for="Order.ID" type="hidden" value="@Model.Order.ID" />
     <button type="submit">You're in luck - for a limited time only everything is FREE!!!!</button>
 </form>
