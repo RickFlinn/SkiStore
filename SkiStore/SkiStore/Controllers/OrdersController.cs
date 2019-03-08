@@ -8,6 +8,7 @@ using SkiStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SkiStore.Controllers
@@ -60,13 +61,12 @@ namespace SkiStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Confirm(Order order)
         {
-
             SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
 
             if (user == null)
                 return RedirectToAction("Login", "Account", "~/Cart/Index");
 
-            
+            order = await _orderMan.GetOrder(order.ID);
             //future TODO: logic for payment
             bool isPaid = true;
 
@@ -74,16 +74,22 @@ namespace SkiStore.Controllers
             {
                 CheckoutViewModel cvm = new CheckoutViewModel()
                 {
-                    Order = await _orderMan.GetOrder(order.ID),
+                    Order = order,
                     AlertMessage = "Payment could not be processed."
                 };
                 return View("Orders/Checkout", cvm);
             }
+            StringBuilder message = new StringBuilder();
+            message.AppendLine($"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.");
+            message.AppendLine("Product\t\tQuantity\t\tPrice");
+            foreach (CartEntry entry in order.Cart.CartEntries)
+            {
+                message.AppendLine($"{entry.Product.Name}\t\t{entry.Quantity}\t\t");
+            }
+            message.AppendLine($"Order Total: ${order.Total}");
 
-            string message = $"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.";
-
-            await _emailSender.SendEmailAsync(user.Email, "Your Order", message);
-
+            await _emailSender.SendEmailAsync(user.Email, "Your Order", message.ToString());
+            
             Cart cart = await _cartMan.GetActiveCart(user.UserName);
             await _cartMan.Deactivate(cart.ID);
 

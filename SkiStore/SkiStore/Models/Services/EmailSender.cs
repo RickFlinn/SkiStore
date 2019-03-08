@@ -27,7 +27,7 @@ namespace SkiStore.Models.Services
             msg.SetFrom("noreply@SkiStore.com", "Ski Store Admin");
 
             msg.AddTo(email);
-            msg.SetSubject("Welcome to our store!");
+            msg.SetSubject(subject);
             msg.AddContent(MimeType.Html, htmlMessage);
 
             await client.SendEmailAsync(msg);
