@@ -63,7 +63,10 @@ namespace SkiStore.Models.Services
         /// <returns> Order associated with that ID </returns>
         public async Task<Order> GetOrder(int orderID)
         {
-            return await _context.Orders.FindAsync(orderID);
+            return await _context.Orders.Include(o => o.Cart)
+                                        .ThenInclude(c => c.CartEntries)
+                                        .ThenInclude(ce => ce.Product)
+                                        .FirstOrDefaultAsync(o => o.ID==orderID);
         }
 
         /// <summary>
@@ -74,7 +77,10 @@ namespace SkiStore.Models.Services
         public async Task<IEnumerable<Order>> OrderHistory(string userID)
         {
             return await _context.Orders.Where(o => o.User == userID)
-                                         .ToListAsync();
+                                        .Include(o => o.Cart)
+                                        .ThenInclude(c => c.CartEntries)
+                                        .ThenInclude(ce => ce.Product)
+                                        .ToListAsync();
         }
     }
 }
