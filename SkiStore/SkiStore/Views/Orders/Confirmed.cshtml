@@ -5,9 +5,9 @@
 }
 <h2>Thank you!</h2>
 
-Order number @Model.ID
+<h2>Order number @Model.ID</h2>
 
-<div class="orderReceipt">
+<div id="orderReceipt">
     <table>
         <tr>
             <th>Product</th>
@@ -23,6 +23,13 @@ Order number @Model.ID
                 <td>@Entry.Product.Price</td>
             </tr>
         }
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>Total:</td>
+                    <td>@Model.Total</td>
+                </tr>
+            </tfoot>
+        
     </table>
-    Total: @Model.Total
 </div>
