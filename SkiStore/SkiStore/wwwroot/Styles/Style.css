@@ -10,6 +10,10 @@ h1 {
     font-size: 35px;
 }
 
+h2 {
+    font-size: 25px;
+}
+
 footer {
     margin-top: 10px;
     text-align: center;
@@ -116,3 +120,28 @@ li a{
 }
 
 
+/*------------------------ Order Confirmation --------------------------*/
+#orderReceipt table {
+    width:50%;
+}
+
+#orderReceipt th, #orderReceipt td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#orderReceipt tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#orderReceipt th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: cornflowerblue;
+    color: white;
+}
+
+#orderReceipt tfoot{
+    font-weight:bold;
+}

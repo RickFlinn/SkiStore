@@ -1,6 +1,35 @@
-﻿@model SkiStore.Models.ViewModels.CheckoutViewModel
+﻿@model SkiStore.Models.Order
 @using  SkiStore.Models;
 @{
     Layout = "_Layout";
 }
-Thank you!
+<h2>Thank you!</h2>
+
+<h2>Order number @Model.ID</h2>
+
+<div id="orderReceipt">
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+
+        @foreach (var Entry in Model.Cart.CartEntries)
+        {
+            <tr>
+                <td>@Entry.Product.Name</td>
+                <td>@Entry.Quantity</td>
+                <td>@Entry.Product.Price</td>
+            </tr>
+        }
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>Total:</td>
+                    <td>@Model.Total</td>
+                </tr>
+            </tfoot>
+        
+    </table>
+</div>

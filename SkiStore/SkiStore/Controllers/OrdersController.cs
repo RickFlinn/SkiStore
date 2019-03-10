@@ -95,7 +95,7 @@ namespace SkiStore.Controllers
             Cart cart = await _cartMan.GetActiveCart(user.UserName);
             await _cartMan.Deactivate(cart.ID);
 
-            return View("Confirmed");
+            return View("Confirmed", order);
         }
         
     }
