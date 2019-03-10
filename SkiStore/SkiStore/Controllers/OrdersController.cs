@@ -21,12 +21,13 @@ namespace SkiStore.Controllers
         private readonly IEmailSender _emailSender;
 
         public OrdersController( UserManager<SkiStoreUser> userManager, ICartManager cartMan,
-                                 IOrderManager orderMan, IEmailSender emailSender )
+                                 IOrderManager orderMan, IEmailSender emailSender, IChargeCreditCards biller)
         {
             _userManager = userManager;
             _orderMan = orderMan;
             _cartMan = cartMan;
             _emailSender = emailSender;
+            _biller = biller;
         }
 
         /// <summary>

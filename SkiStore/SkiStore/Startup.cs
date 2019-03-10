@@ -59,7 +59,7 @@ namespace SkiStore
             services.AddScoped<ICartEntryManager, CartEntryManager>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IOrderManager, OrderManager>();
-            
+            services.AddTransient<IChargeCreditCards, AuthNetBiller>();
 
         }
 

@@ -11,6 +11,8 @@ namespace SkiStore.Models.ViewModels
         public Order Order { get; set; }
 
         // TODO: Add necessary data models for payment details when payment is implemented 
-        public bool Paid { get; set; }
+        public string CardNumber { get; set; }
+        public string ExpMonth { get; set; }
+        public string ExpYear { get; set; }
     }
 }
