@@ -4,6 +4,11 @@
     Layout = "_Layout";
 }
 
+@if(Model.AlertMessage != null)
+{
+    <p>@Model.AlertMessage</p>
+}
+
 <div class="deck">
 @foreach(Product product in Model.Products)
 {

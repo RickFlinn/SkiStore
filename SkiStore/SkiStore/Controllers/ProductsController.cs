@@ -20,10 +20,12 @@ namespace SkiStore.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string alertMsg = null)
         {
             ProductsViewModel pvm = new ProductsViewModel();
             pvm.Products = _productMan.GetAllProducts();
+            if(alertMsg != null)
+                pvm.AlertMessage = alertMsg;
             return View(pvm);
         }
 

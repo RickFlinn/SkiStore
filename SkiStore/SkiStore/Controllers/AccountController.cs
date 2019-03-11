@@ -70,11 +70,11 @@ namespace SkiStore.Controllers
                 if (userCreate.Succeeded)
                 {
                     Claim claimToTheName = new Claim("FullName", $"{newUser.FirstName} {newUser.LastName}");
-                    Claim dobClaim = new Claim("DateOfBirth",
+                    Claim dobClaim = new Claim("DOB",
                                                new DateTime(newUser.DateOfBirth.Year,
                                                             newUser.DateOfBirth.Month,
-                                                            newUser.DateOfBirth.Day
-                                                            ).ToString("u"),
+                                                            newUser.DateOfBirth.Day)
+                                                            .ToString("u"),
                                                ClaimValueTypes.DateTime);
 
                     Claim waiverClaim = new Claim("AgreedToWaiver", newUser.AgreedToWaiver);
