@@ -15,7 +15,7 @@ To access the Cart or any checkout functions, we enforce a policy that a user mu
 
 
 ## Database Schema
-[]
+![Schema](Assets/Schema.png)
 
 The CartEntry table in our database joins the Cart and Product tables. Each Cart entry holds the UserID and unique CartID. The CartEntry table retains the products and quantities ordered associated with each Cart item. This will allow each user to have their own active cart that can be retrieved by logging in. When a purchase is made, the Cart becomes inactive but remains in the database. This will allow us to query for past orders in a future Sprint.
 ## Screenshots
