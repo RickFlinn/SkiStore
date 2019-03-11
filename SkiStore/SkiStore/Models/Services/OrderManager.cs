@@ -39,7 +39,7 @@ namespace SkiStore.Models.Services
             decimal total = 0;
             foreach(CartEntry entry in cart.CartEntries)
             {
-                total += entry.Product.Price * entry.Product.Quantity;
+                total += entry.Product.Price * entry.Quantity;
             }
 
             Order newOrder = new Order()

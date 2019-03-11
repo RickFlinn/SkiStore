@@ -113,10 +113,9 @@ namespace SkiStore.Models.Services
                     }
                     else
                     {
-                        sb.AppendLine("Failed transacion.");
+                        sb.AppendLine("Failed transaction.");
                         if (response.transactionResponse.errors != null)
                         {
-                            sb.AppendLine($"Error Code: { response.transactionResponse.errors[0].errorCode}");
                             sb.AppendLine($"Error message: { response.transactionResponse.errors[0].errorText}");
                         }
                         return new Tuple<bool, string>(false, sb.ToString());
@@ -127,12 +126,10 @@ namespace SkiStore.Models.Services
                     Console.WriteLine("Failed Transaction.");
                     if (response.transactionResponse != null && response.transactionResponse.errors != null)
                     {
-                        sb.AppendLine($"Error Code: { response.transactionResponse.errors[0].errorCode}");
                         sb.AppendLine($"Error message: { response.transactionResponse.errors[0].errorText}");
                     }
                     else
                     {
-                        sb.AppendLine($"Error Code: {response.messages.message[0].code}");
                         sb.AppendLine($"Error message: {response.messages.message[0].text}");
                     }
                     return new Tuple<bool, string>(false, sb.ToString());
@@ -140,10 +137,8 @@ namespace SkiStore.Models.Services
             }
             else
             {
-                return new Tuple<bool, string>(false, "No response.");
+                return new Tuple<bool, string>(false, "Payment authorization could not be accessed. Please try again later.");
             }
-
-            
         }
     }
 }
