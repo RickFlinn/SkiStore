@@ -16,7 +16,7 @@ namespace SkiStore.Models.Interfaces
         /// <param name="expires"> Expiration date of the credit card  </param>
         /// <param name="securityCode"> Security code of the credit card </param>
         /// <param name="amount"> Amount to charge to the card </param>
-        /// <returns> Boolean indicating whether the card was successfully charged </returns>
-        ANetApiResponse ChargeCard(string cardNumber, string expires, IEnumerable<CartEntry> cartEntries);
+        /// <returns> Boolean indicating whether the card was successfully charged, and a string containing any response codes and messaging we might want to display to the user </returns>
+        Tuple<bool, string> ChargeCard(string cardNumber, string expires, string secCode, IEnumerable<CartEntry> cartEntries);
     }
 }

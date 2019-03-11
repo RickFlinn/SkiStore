@@ -14,5 +14,6 @@ namespace SkiStore.Models.ViewModels
         public string CardNumber { get; set; }
         public string ExpMonth { get; set; }
         public string ExpYear { get; set; }
+        public string SecCode { get; set; }
     }
 }
