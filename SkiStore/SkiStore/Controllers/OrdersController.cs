@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AuthorizeNet.Api.Controllers;
+using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers.Bases;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using SkiStore.Models;
@@ -19,6 +22,7 @@ namespace SkiStore.Controllers
         private readonly IOrderManager _orderMan;
         private readonly ICartManager _cartMan;
         private readonly IEmailSender _emailSender;
+        private readonly IChargeCreditCards _biller;
 
         public OrdersController( UserManager<SkiStoreUser> userManager, ICartManager cartMan,
                                  IOrderManager orderMan, IEmailSender emailSender, IChargeCreditCards biller)
@@ -68,18 +72,23 @@ namespace SkiStore.Controllers
                 return RedirectToAction("Login", "Account", "~/Cart/Index");
 
             order = await _orderMan.GetOrder(order.ID);
-            //future TODO: logic for payment
-            bool isPaid = true;
+            
+            string testCardNumber = "4111111111111111";
+            string testExpDate = "1028";
+            string testCode = "123";
+            Tuple<bool, string> chargeResponse = _biller.ChargeCard(testCardNumber, testExpDate, testCode, order.Cart.CartEntries);
 
-            if (!isPaid)
+            // If the transaction fails, redirect the user to the previous billing view, with any available information on the failed transaction.
+            if (chargeResponse.Item1 == false)
             {
                 CheckoutViewModel cvm = new CheckoutViewModel()
                 {
                     Order = order,
-                    AlertMessage = "Payment could not be processed."
+                    AlertMessage = chargeResponse.Item2
                 };
                 return View("Orders/Checkout", cvm);
             }
+
             StringBuilder message = new StringBuilder();
             message.AppendLine($"Thanks for your business, {user.FirstName}! Your order number is {order.ID}.");
             message.AppendLine("Product\t\tQuantity\t\tPrice");

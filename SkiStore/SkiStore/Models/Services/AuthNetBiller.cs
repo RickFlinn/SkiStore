@@ -30,7 +30,7 @@ namespace SkiStore.Models.Services
         /// <param name="amount"> Amount to charge to the card </param>
         /// <returns>  The response returned by the Auth.Net API when a charge with the given credentials is attempted
         /// </returns>
-        public ANetApiResponse ChargeCard(string ccNumber, string expires, IEnumerable<CartEntry> cartEntries)
+        public Tuple<bool, string> ChargeCard(string ccNumber, string expires, string secCode, IEnumerable<CartEntry> cartEntries)
         {
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
@@ -45,7 +45,8 @@ namespace SkiStore.Models.Services
             creditCardType creditCard = new creditCardType
             {
                 cardNumber = ccNumber,
-                expirationDate = expires
+                expirationDate = expires,
+                cardCode = secCode
             };
 
             paymentType paymentType = new paymentType
@@ -90,10 +91,59 @@ namespace SkiStore.Models.Services
 
             controller.Execute();
 
-            createTransactionResponse response = controller.GetApiResponse();
+            var response = controller.GetApiResponse();
 
-            return response;
+            StringBuilder sb = new StringBuilder();
 
+            
+
+            if (response != null)
+            {
+                if (response.messages.resultCode == messageTypeEnum.Ok)
+                {
+                    if (response.transactionResponse.messages != null)
+                    {
+
+                        sb.AppendLine($"Successfully created transaction with Transaction ID: {response.transactionResponse.transId}");
+                        sb.AppendLine($"Response Code: {response.transactionResponse.responseCode}");
+                        sb.AppendLine($"Message Code: {response.transactionResponse.messages[0].code}");
+                        sb.AppendLine($"Description: {response.transactionResponse.messages[0].description}");
+                        sb.AppendLine($"Success, Auth Code : {response.transactionResponse.authCode}");
+                        return new Tuple<bool, string>(true, sb.ToString());
+                    }
+                    else
+                    {
+                        sb.AppendLine("Failed transacion.");
+                        if (response.transactionResponse.errors != null)
+                        {
+                            sb.AppendLine($"Error Code: { response.transactionResponse.errors[0].errorCode}");
+                            sb.AppendLine($"Error message: { response.transactionResponse.errors[0].errorText}");
+                        }
+                        return new Tuple<bool, string>(false, sb.ToString());
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed Transaction.");
+                    if (response.transactionResponse != null && response.transactionResponse.errors != null)
+                    {
+                        sb.AppendLine($"Error Code: { response.transactionResponse.errors[0].errorCode}");
+                        sb.AppendLine($"Error message: { response.transactionResponse.errors[0].errorText}");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"Error Code: {response.messages.message[0].code}");
+                        sb.AppendLine($"Error message: {response.messages.message[0].text}");
+                    }
+                    return new Tuple<bool, string>(false, sb.ToString());
+                }
+            }
+            else
+            {
+                return new Tuple<bool, string>(false, "No response.");
+            }
+
+            
         }
     }
 }
