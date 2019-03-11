@@ -53,7 +53,7 @@ namespace SkiStore.Controllers
 
             CheckoutViewModel cvm = new CheckoutViewModel() { Order = order };
 
-            return View(cvm);
+            return View("Payment", cvm);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace SkiStore.Controllers
         /// <param name="order"> Order to be checked out </param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Confirm(Order order)
+        public async Task<IActionResult> Confirm(Order order, string cardNumber, string expMonth, string expYear, string secCode)
         {
             SkiStoreUser user = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -72,11 +72,13 @@ namespace SkiStore.Controllers
                 return RedirectToAction("Login", "Account", "~/Cart/Index");
 
             order = await _orderMan.GetOrder(order.ID);
-            
-            string testCardNumber = "4111111111111111";
-            string testExpDate = "1028";
-            string testCode = "123";
-            Tuple<bool, string> chargeResponse = _biller.ChargeCard(testCardNumber, testExpDate, testCode, order.Cart.CartEntries);
+
+            //string testCardNumber = "4111111111111111"; 
+            //string testExpDate = "1028";
+            //string testCode = "901";
+            string expDate = expMonth + expYear;
+
+            Tuple<bool, string> chargeResponse = _biller.ChargeCard(cardNumber, expDate, secCode, order.Cart.CartEntries);
 
             // If the transaction fails, redirect the user to the previous billing view, with any available information on the failed transaction.
             if (chargeResponse.Item1 == false)
@@ -86,7 +88,7 @@ namespace SkiStore.Controllers
                     Order = order,
                     AlertMessage = chargeResponse.Item2
                 };
-                return View("Orders/Checkout", cvm);
+                return View("Payment", cvm);
             }
 
             StringBuilder message = new StringBuilder();
